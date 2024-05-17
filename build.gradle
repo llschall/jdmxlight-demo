@@ -7,9 +7,13 @@ version = '0.0.1-SNAPSHOT'
 
 repositories {
     mavenCentral()
+    maven {
+        url 'https://s01.oss.sonatype.org/content/repositories/snapshots'
+    }
 }
 
 dependencies {
+    implementation 'io.github.llschall:jdmxlight:0.0.1-SNAPSHOT'
     testImplementation 'org.jetbrains.kotlin:kotlin-test'
 }
 

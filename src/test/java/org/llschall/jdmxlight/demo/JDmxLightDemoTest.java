@@ -13,5 +13,4 @@ public class JDmxLightDemoTest {
         String title = model.createTitle();
         Assertions.assertFalse(title.isBlank());
     }
-
 }
