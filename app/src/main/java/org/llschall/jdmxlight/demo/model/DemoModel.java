@@ -4,10 +4,10 @@ import org.llschall.jdmxlight.JDmxLight;
 
 public class DemoModel {
 
-    public String createTitle() {
+    public String createLibraryName() {
 
         String version = JDmxLight.VERSION;
-        return "JDmxLight "+ version+" Demo";
+        return "JDmxLight " + version;
     }
 
 }

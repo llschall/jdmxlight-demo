@@ -10,7 +10,7 @@ public class JDmxLightDemoTest {
     public void testSetup() {
 
         DemoModel model = new DemoModel();
-        String title = model.createTitle();
+        String title = model.createLibraryName();
         Assertions.assertFalse(title.isBlank());
     }
 }
