@@ -1,5 +1,6 @@
 package org.llschall.jdmxlight.demo.view;
 
+import org.llschall.jdmxlight.demo.controller.DemoController;
 import org.llschall.jdmxlight.demo.model.DemoModel;
 
 import javax.swing.*;
@@ -9,14 +10,14 @@ class RootPanel extends JPanel {
 
     final DemoModel model;
 
-    RootPanel(DemoModel model) {
+    RootPanel(DemoController controller, DemoModel model) {
         this.model = model;
 
         String libraryName = model.createLibraryName();
 
         NorthPanel northPnl = new NorthPanel(libraryName);
         CenterPanel centerPnl = new CenterPanel();
-        SouthPanel southPnl = new SouthPanel();
+        SouthPanel southPnl = new SouthPanel(controller);
 
         JPanel[] panels = {northPnl, centerPnl, southPnl};
         for (JPanel pnl : panels) {
@@ -27,5 +28,10 @@ class RootPanel extends JPanel {
         add(northPnl, BorderLayout.NORTH);
         add(centerPnl, BorderLayout.CENTER);
         add(southPnl, BorderLayout.SOUTH);
+
+        addKeyListener(controller);
+
+        setFocusable(true);
+        requestFocus();
     }
 }
