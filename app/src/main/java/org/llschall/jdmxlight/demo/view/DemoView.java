@@ -16,6 +16,7 @@ public class DemoView extends JFrame {
     }
 
     public void display() {
+        setSize(800, 600);
         setVisible(true);
     }
 

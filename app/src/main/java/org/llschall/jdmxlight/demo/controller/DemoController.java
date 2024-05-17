@@ -13,24 +13,27 @@ public class DemoController {
         DemoModel model = new DemoModel();
         DemoView view = new DemoView(model);
 
-        view.addKeyListener(new KeyListener() {
+        view.addKeyListener(createKeyListener());
+        view.display();
+    }
+
+    KeyListener createKeyListener() {
+        return new KeyListener() {
             @Override
-            public void keyTyped(KeyEvent e) {}
+            public void keyTyped(KeyEvent e) {
+            }
 
             @Override
             public void keyPressed(KeyEvent e) {
                 int code = e.getKeyCode();
-                if (code==27) {
+                if (code == 27) {
                     System.exit(0);
                 }
             }
 
             @Override
-            public void keyReleased(KeyEvent e) {}
-        });
-
-        view.display();
+            public void keyReleased(KeyEvent e) {
+            }
+        };
     }
-
-
 }
