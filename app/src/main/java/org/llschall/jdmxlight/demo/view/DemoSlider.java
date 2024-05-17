@@ -1,11 +1,13 @@
 package org.llschall.jdmxlight.demo.view;
 
+import org.llschall.jdmxlight.demo.controller.DemoController;
+
 import javax.swing.*;
 import java.awt.*;
 
 class DemoSlider extends JPanel {
 
-    DemoSlider(String name) {
+    DemoSlider(String name, DemoController controller) {
 
         JSlider slider = new JSlider(0, 255);
         slider.setOrientation(JSlider.NORTH);
@@ -22,7 +24,9 @@ class DemoSlider extends JPanel {
         });
 
         slider.addChangeListener(e -> {
-            valueLbl.setText("" + slider.getValue());
+            int value = slider.getValue();
+            valueLbl.setText("" + value);
+            controller.fireValueChanged(name, value);
         });
 
         setBorder(BorderFactory.createRaisedBevelBorder());

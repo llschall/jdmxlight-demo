@@ -11,17 +11,35 @@ import java.awt.event.KeyListener;
 
 public class DemoController implements ActionListener, KeyListener {
 
-    public void start() {
+    public static final String ROTATION = "Rotation";
+    public static final String INCLINATION = "Inclinaison";
+    public static final String COLOR = "Couleur";
 
-        DemoModel model = new DemoModel();
+    final DemoModel model = new DemoModel();
+
+    public void display() {
+
         DemoView view = new DemoView(this, model);
         view.display();
+    }
 
+    public void start() {
+        model.start();
     }
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        fireExitEvent();
+        String cmd = e.getActionCommand();
+        switch (cmd) {
+            case "Start":
+                model.start();
+                return;
+            case "Exit":
+                fireExitEvent();
+                return;
+            default:
+                Logger.get().msg("Ignored command: " + cmd);
+        }
     }
 
     @Override
@@ -42,6 +60,15 @@ public class DemoController implements ActionListener, KeyListener {
     @Override
     public void keyReleased(KeyEvent e) {
         // do nothing
+    }
+
+    public void fireValueChanged(String name, int i) {
+        switch (name) {
+            case COLOR -> model.setColor(i);
+            case ROTATION -> model.setRotation(i);
+            case INCLINATION -> model.setInclination(i);
+            default -> Logger.get().msg("Ignored value: " + name);
+        }
     }
 
     void fireExitEvent() {
