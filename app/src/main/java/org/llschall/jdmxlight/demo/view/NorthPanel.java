@@ -49,7 +49,10 @@ class LocationPanel extends JPanel implements IChangeListener {
             @Override
             public void mousePressed(MouseEvent e) {
                 Point point = e.getPoint();
-                Point location = new Point(model.rotation.get(), model.rotation.get());
+                Point location = new Point(
+                        model.getDmxValue(DemoController.ROTATION),
+                        model.getDmxValue(DemoController.INCLINATION)
+                );
                 double distance = point.distance(location);
                 moving = distance < 30;
                 repaint();
@@ -88,8 +91,8 @@ class LocationPanel extends JPanel implements IChangeListener {
     @Override
     public void paint(Graphics g) {
 
-        int x = model.rotation.get();
-        int y = model.inclination.get();
+        int x = model.getDmxValue(DemoController.ROTATION);
+        int y = model.getDmxValue(DemoController.INCLINATION);
 
         Graphics2D gr = (Graphics2D) g.create();
         gr.setColor(Color.DARK_GRAY);
@@ -100,8 +103,6 @@ class LocationPanel extends JPanel implements IChangeListener {
 
     @Override
     public void modelChanged() {
-        int x = model.rotation.get();
-        int y = model.inclination.get();
         repaint();
     }
 }

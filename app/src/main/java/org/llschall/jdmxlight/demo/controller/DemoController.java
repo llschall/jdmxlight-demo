@@ -14,6 +14,8 @@ public class DemoController implements ActionListener, KeyListener {
     public static final String ROTATION = "Rotation";
     public static final String INCLINATION = "Inclinaison";
     public static final String COLOR = "Couleur";
+    public static final String GOBOS = "Gobos";
+    public static final String NETTETE = "Netteté";
 
     final DemoModel model = new DemoModel();
 
@@ -21,10 +23,6 @@ public class DemoController implements ActionListener, KeyListener {
 
         DemoView view = new DemoView(this, model);
         view.display();
-    }
-
-    public void start() {
-        model.start();
     }
 
     @Override
@@ -60,15 +58,6 @@ public class DemoController implements ActionListener, KeyListener {
     @Override
     public void keyReleased(KeyEvent e) {
         // do nothing
-    }
-
-    public void fireValueChanged(String name, int i) {
-        switch (name) {
-            case COLOR -> model.setColor(i);
-            case ROTATION -> model.setRotation(i);
-            case INCLINATION -> model.setInclination(i);
-            default -> Logger.get().msg("Ignored value: " + name);
-        }
     }
 
     void fireExitEvent() {

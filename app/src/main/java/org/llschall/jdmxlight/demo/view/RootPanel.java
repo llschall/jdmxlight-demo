@@ -16,7 +16,7 @@ class RootPanel extends JPanel {
         String libraryName = model.createLibraryName();
 
         NorthPanel northPnl = new NorthPanel(controller, model, libraryName);
-        CenterPanel centerPnl = new CenterPanel(controller);
+        CenterPanel centerPnl = new CenterPanel(controller, model);
         SouthPanel southPnl = new SouthPanel(controller);
 
         JPanel[] panels = {northPnl, centerPnl, southPnl};
