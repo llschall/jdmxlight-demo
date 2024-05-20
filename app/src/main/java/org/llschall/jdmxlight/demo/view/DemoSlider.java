@@ -15,7 +15,7 @@ class DemoSlider extends JPanel implements IChangeListener {
     final DemoModel model;
 
     final JSlider slider = new JSlider(0, 255);
-    final JLabel valueLbl = new JLabel();
+    final JLabel label = new JLabel();
 
     DemoSlider(String name, DemoController controller, DemoModel model) {
         this.name = name;
@@ -26,11 +26,13 @@ class DemoSlider extends JPanel implements IChangeListener {
 
         int start = model.getDmxValue(name);
 
+        label.setFont(label.getFont().deriveFont(Font.PLAIN, 60));
+
         slider.setOrientation(JSlider.NORTH);
         slider.setValue(start);
         slider.setPaintTicks(true);
 
-        valueLbl.setText(Integer.toString(start));
+        label.setText(Integer.toString(start));
 
         slider.addMouseWheelListener(e -> {
             int rotation = e.getWheelRotation();
@@ -51,7 +53,7 @@ class DemoSlider extends JPanel implements IChangeListener {
         nameLbl.setFont(nameLbl.getFont().deriveFont(Font.BOLD, 20));
 
         southPnl.setLayout(new GridLayout(0, 1));
-        southPnl.add(valueLbl);
+        southPnl.add(label);
         southPnl.add(nameLbl);
 
         setLayout(new BorderLayout());
@@ -62,7 +64,7 @@ class DemoSlider extends JPanel implements IChangeListener {
     @Override
     public void modelChanged() {
         int value = model.getDmxValue(name);
-        valueLbl.setText("" + value);
+        label.setText("" + value);
         slider.setValue(value);
     }
 }
