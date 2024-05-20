@@ -1,6 +1,8 @@
 package org.llschall.jdmxlight.demo.view;
 
 import org.llschall.jdmxlight.demo.controller.DemoController;
+import org.llschall.jdmxlight.demo.model.DemoModel;
+import org.llschall.jdmxlight.demo.model.IChangeListener;
 
 import javax.swing.*;
 import java.awt.*;
@@ -10,7 +12,7 @@ import java.awt.event.MouseMotionListener;
 
 class NorthPanel extends JPanel {
 
-    NorthPanel(DemoController controller, String libraryName) {
+    NorthPanel(DemoController controller, DemoModel model, String libraryName) {
 
         JPanel panel = new JPanel();
 
@@ -18,22 +20,24 @@ class NorthPanel extends JPanel {
         JLabel label = new JLabel("Featuring " + libraryName);
         label.setFont(label.getFont().deriveFont(Font.ITALIC, 10));
         panel.add(label, BorderLayout.NORTH);
-        panel.add(new LocationPanel(controller), BorderLayout.CENTER);
+        panel.add(new LocationPanel(controller, model), BorderLayout.CENTER);
 
         setLayout(new FlowLayout());
         add(panel);
     }
 }
 
-class LocationPanel extends JPanel {
+class LocationPanel extends JPanel implements IChangeListener {
 
+    final DemoModel model;
     final DemoController controller;
 
-    final Point location = new Point(50, 50);
     boolean moving = false;
 
-    LocationPanel(DemoController controller) {
+    LocationPanel(DemoController controller, DemoModel model) {
         this.controller = controller;
+        this.model = model;
+        model.addListener(this);
 
         setPreferredSize(new Dimension(200, 200));
 
@@ -45,6 +49,7 @@ class LocationPanel extends JPanel {
             @Override
             public void mousePressed(MouseEvent e) {
                 Point point = e.getPoint();
+                Point location = new Point(model.rotation.get(), model.rotation.get());
                 double distance = point.distance(location);
                 moving = distance < 30;
                 repaint();
@@ -69,8 +74,9 @@ class LocationPanel extends JPanel {
             @Override
             public void mouseDragged(MouseEvent e) {
                 Point point = e.getPoint();
-                location.move(point.x - 20, point.y - 20);
-                repaint();
+                int x = point.x - 20;
+                int y = point.y - 20;
+                model.fireLocationMoved(x, y);
             }
 
             @Override
@@ -81,10 +87,21 @@ class LocationPanel extends JPanel {
 
     @Override
     public void paint(Graphics g) {
+
+        int x = model.rotation.get();
+        int y = model.inclination.get();
+
         Graphics2D gr = (Graphics2D) g.create();
         gr.setColor(Color.DARK_GRAY);
         gr.fillRect(0, 0, 300, 200);
         gr.setColor(moving ? Color.YELLOW : Color.CYAN);
-        gr.fillOval(location.x, location.y, 40, 40);
+        gr.fillOval(x, y, 40, 40);
+    }
+
+    @Override
+    public void modelChanged() {
+        int x = model.rotation.get();
+        int y = model.inclination.get();
+        repaint();
     }
 }
