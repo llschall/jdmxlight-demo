@@ -32,6 +32,9 @@ class LocationPanel extends JPanel implements IChangeListener {
     final DemoModel model;
     final DemoController controller;
 
+    final int width = 250;
+    final int height = 180;
+
     boolean moving = false;
 
     LocationPanel(DemoController controller, DemoModel model) {
@@ -39,7 +42,7 @@ class LocationPanel extends JPanel implements IChangeListener {
         this.model = model;
         model.addListener(this);
 
-        setPreferredSize(new Dimension(200, 200));
+        setPreferredSize(new Dimension(width, height));
 
         addMouseListener(new MouseListener() {
             @Override
@@ -51,7 +54,7 @@ class LocationPanel extends JPanel implements IChangeListener {
                 Point point = e.getPoint();
                 Point location = new Point(
                         model.getDmxValue(DemoController.ROTATION),
-                        model.getDmxValue(DemoController.INCLINATION)
+                        height - model.getDmxValue(DemoController.INCLINATION)
                 );
                 double distance = point.distance(location);
                 moving = distance < 30;
@@ -78,7 +81,7 @@ class LocationPanel extends JPanel implements IChangeListener {
             public void mouseDragged(MouseEvent e) {
                 Point point = e.getPoint();
                 int x = point.x - 20;
-                int y = point.y - 20;
+                int y = (height - point.y) + 20;
                 model.fireLocationMoved(x, y);
             }
 
@@ -92,11 +95,11 @@ class LocationPanel extends JPanel implements IChangeListener {
     public void paint(Graphics g) {
 
         int x = model.getDmxValue(DemoController.ROTATION);
-        int y = model.getDmxValue(DemoController.INCLINATION);
+        int y = height - model.getDmxValue(DemoController.INCLINATION);
 
         Graphics2D gr = (Graphics2D) g.create();
         gr.setColor(Color.DARK_GRAY);
-        gr.fillRect(0, 0, 300, 200);
+        gr.fillRect(0, 0, width, height);
         gr.setColor(moving ? Color.YELLOW : Color.CYAN);
         gr.fillOval(x, y, 40, 40);
     }
