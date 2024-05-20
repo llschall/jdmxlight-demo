@@ -69,7 +69,7 @@ class LocationPanel extends JPanel {
             @Override
             public void mouseDragged(MouseEvent e) {
                 Point point = e.getPoint();
-                location.move(point.x, point.y);
+                location.move(point.x - 20, point.y - 20);
                 repaint();
             }
 
@@ -85,6 +85,6 @@ class LocationPanel extends JPanel {
         gr.setColor(Color.DARK_GRAY);
         gr.fillRect(0, 0, 300, 200);
         gr.setColor(moving ? Color.YELLOW : Color.CYAN);
-        gr.fillOval(location.x, location.y, 20, 20);
+        gr.fillOval(location.x, location.y, 40, 40);
     }
 }
