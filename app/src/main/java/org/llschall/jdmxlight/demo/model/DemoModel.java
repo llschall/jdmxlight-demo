@@ -70,6 +70,7 @@ public class DemoModel {
     public void start() {
         starter.start();
         started = true;
+        update();
     }
 
     void update() {
