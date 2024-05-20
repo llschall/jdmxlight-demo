@@ -35,6 +35,9 @@ class LocationPanel extends JPanel implements IChangeListener {
     final int width = 250;
     final int height = 180;
 
+    final int x0 = -100;
+    final int y0 = -50;
+
     boolean moving = false;
 
     LocationPanel(DemoController controller, DemoModel model) {
@@ -80,8 +83,8 @@ class LocationPanel extends JPanel implements IChangeListener {
             @Override
             public void mouseDragged(MouseEvent e) {
                 Point point = e.getPoint();
-                int x = point.x - 20;
-                int y = (height - point.y) + 20;
+                int x = (width - point.x) + 20 + x0;
+                int y = (height - point.y) + 20 + y0;
                 model.fireLocationMoved(x, y);
             }
 
@@ -94,8 +97,11 @@ class LocationPanel extends JPanel implements IChangeListener {
     @Override
     public void paint(Graphics g) {
 
-        int x = model.getDmxValue(DemoController.ROTATION);
+        int x = width - model.getDmxValue(DemoController.ROTATION);
         int y = height - model.getDmxValue(DemoController.INCLINATION);
+
+        x -= 100;
+        y -= 50;
 
         Graphics2D gr = (Graphics2D) g.create();
         gr.setColor(Color.DARK_GRAY);

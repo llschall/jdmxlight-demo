@@ -24,8 +24,8 @@ public class DemoModel {
 
     public DemoModel() {
         map.put(COLOR, 0);
+        map.put(ROTATION, 25);
         map.put(INCLINATION, 50);
-        map.put(ROTATION, 50);
         map.put(GOBOS, 0);
         map.put(NETTETE, 50);
 
