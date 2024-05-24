@@ -20,7 +20,7 @@ public class DemoModel {
 
     final ConcurrentHashMap<String, Integer> map = new ConcurrentHashMap<>();
 
-    final JDmxLightStarter starter = new JDmxLightStarter();
+    final JDmxLightStarter starter = new JDmxLightStarter(14);
 
     public DemoModel() {
         map.put(COLOR, 0);
@@ -79,13 +79,13 @@ public class DemoModel {
             return;
         }
 
-        map.get(DemoController.ROTATION);
+        starter.update(1, map.get(ROTATION));
+        starter.update(2, map.get(INCLINATION));
+        starter.update(6, map.get(COLOR));
 
-        starter.update(
-                map.get(DemoController.ROTATION),
-                map.get(DemoController.INCLINATION),
-                map.get(DemoController.COLOR)
-        );
+        starter.update(7, 255);
+        starter.update(8, 30);
+        starter.update(9, 31);
     }
 
 }
