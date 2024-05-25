@@ -83,9 +83,10 @@ public class DemoModel {
         starter.update(2, map.get(INCLINATION));
         starter.update(6, map.get(COLOR));
 
-        starter.update(7, 255);
-        starter.update(8, 30);
-        starter.update(9, 31);
+        starter.update(7, 255); // frequence obturateur
+        starter.update(8, 30); // gradateur electronique
+        starter.update(9, map.get(GOBOS));
+        starter.update(14, map.get(NETTETE));
     }
 
 }
