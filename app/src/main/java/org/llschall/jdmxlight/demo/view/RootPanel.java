@@ -13,19 +13,13 @@ class RootPanel extends JPanel {
     RootPanel(DemoController controller, DemoModel model) {
         this.model = model;
 
-        String libraryName = model.createLibraryName();
+        JTabbedPane centerPnl = new JTabbedPane();
+        centerPnl.addTab("Basic", new BasicPanel(controller, model));
+        centerPnl.addTab("Advanced", new AdvancedPanel());
 
-        NorthPanel northPnl = new NorthPanel(controller, model, libraryName);
-        CenterPanel centerPnl = new CenterPanel(controller, model);
         SouthPanel southPnl = new SouthPanel(controller);
 
-        JPanel[] panels = {northPnl, centerPnl, southPnl};
-        for (JPanel pnl : panels) {
-            pnl.setBorder(BorderFactory.createRaisedBevelBorder());
-        }
-
         setLayout(new BorderLayout());
-        add(northPnl, BorderLayout.NORTH);
         add(centerPnl, BorderLayout.CENTER);
         add(southPnl, BorderLayout.SOUTH);
 
