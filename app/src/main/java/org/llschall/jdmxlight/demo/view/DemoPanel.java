@@ -7,11 +7,11 @@ import javax.swing.BorderFactory;
 import javax.swing.JPanel;
 import java.awt.BorderLayout;
 
-class BasicPanel extends JPanel {
+class DemoPanel extends JPanel {
 
     final DemoModel model;
 
-    BasicPanel(DemoController controller, DemoModel model) {
+    DemoPanel(DemoController controller, DemoModel model) {
         this.model = model;
 
         String libraryName = model.createLibraryName();

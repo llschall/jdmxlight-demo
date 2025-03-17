@@ -14,8 +14,13 @@ class RootPanel extends JPanel {
         this.model = model;
 
         JTabbedPane centerPnl = new JTabbedPane();
-        centerPnl.addTab("Basic", new BasicPanel(controller, model));
-        centerPnl.addTab("Advanced", new AdvancedPanel());
+        centerPnl.addTab("#32", new RawPanel(32, 8));
+        centerPnl.addTab("#64", new RawPanel(64, 8));
+        centerPnl.addTab("#128", new RawPanel(128, 16));
+        centerPnl.addTab("#256", new RawPanel(256, 16));
+        centerPnl.addTab("#512", new RawPanel(512, 32));
+
+        centerPnl.addTab("Demo", new DemoPanel(controller, model));
 
         SouthPanel southPnl = new SouthPanel(controller);
 

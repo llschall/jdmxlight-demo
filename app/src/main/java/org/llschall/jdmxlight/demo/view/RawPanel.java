@@ -6,12 +6,12 @@ import java.awt.*;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 
-public class AdvancedPanel extends JPanel {
+public class RawPanel extends JPanel {
 
-    AdvancedPanel() {
+    RawPanel(int channels, int rows) {
         JPanel centerPnl = new JPanel();
-        centerPnl.setLayout(new GridLayout(16,0));
-        for (int i = 0; i < 512; i++) {
+        centerPnl.setLayout(new GridLayout(rows,0));
+        for (int i = 1; i <= channels; i++) {
             centerPnl.add(new Slider(i));
         }
         setLayout(new BorderLayout());
@@ -24,22 +24,24 @@ public class AdvancedPanel extends JPanel {
 
         Slider(int i) {
 
-            JLabel label = new JLabel("" + value);
-            label.setFont(label.getFont().deriveFont(17f));
-
-            JLabel channel = new JLabel("" + i);
+            JLabel channel = new JLabel(buildLabel(i));
             channel.setFont(channel.getFont().deriveFont(Font.ITALIC));
+            channel.setOpaque(true);
+            channel.setBackground(Color.LIGHT_GRAY);
 
-            setLayout(new BorderLayout());
-            add(label, BorderLayout.NORTH);
-            add(channel, BorderLayout.SOUTH);
+            JLabel value = new JLabel("" + this.value);
+            value.setFont(value.getFont().deriveFont(17f));
+
+            setLayout(new FlowLayout(FlowLayout.LEFT));
+            add(channel);
+            add(value);
 
             addMouseWheelListener(e -> {
                 int rotation = e.getWheelRotation();
-                value -= rotation;
-                if(value < 0) value =0;
-                if (value > 255) value = 255;
-                label.setText(""+value);
+                this.value -= rotation;
+                if(this.value < 0) this.value =0;
+                if (this.value > 255) this.value = 255;
+                value.setText(""+ this.value);
             });
 
             Border border = BorderFactory.createLineBorder(Color.GRAY);
@@ -68,6 +70,12 @@ public class AdvancedPanel extends JPanel {
                 @Override
                 public void mouseReleased(MouseEvent e) {}
             });
+        }
+
+        String buildLabel(int i) {
+            if(i > 99) return Integer.toString(i);
+            if(i > 9) return "0"+i;
+            return "00"+i;
         }
 
     }
