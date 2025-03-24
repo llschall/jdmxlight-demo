@@ -18,19 +18,21 @@ public class DemoController implements ActionListener, KeyListener {
     public static final String NETTETE = "Netteté";
 
     final DemoModel model = new DemoModel();
+    private DemoView view;
 
     public void display() {
-
-        DemoView view = new DemoView(this, model);
+        view = new DemoView(this, model);
         view.display();
     }
 
     @Override
     public void actionPerformed(ActionEvent e) {
+        boolean isRaw = view.isCurrentTabRaw();
+
         String cmd = e.getActionCommand();
         switch (cmd) {
             case "Start":
-                model.start();
+                model.start(isRaw);
                 return;
             case "Exit":
                 fireExitEvent();

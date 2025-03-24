@@ -8,16 +8,23 @@ import javax.swing.*;
 
 public class DemoView extends JFrame {
 
+    final RootPanel panel;
+
     public DemoView(DemoController controller, DemoModel model) {
 
         setTitle("JDmxLight Demo");
         setDefaultCloseOperation(EXIT_ON_CLOSE);
 
-        getContentPane().add(new RootPanel(controller, model));
+        panel = new RootPanel(controller, model);
+        getContentPane().add(panel);
     }
 
     public void display() {
         setSize(800, 600);
         setVisible(true);
+    }
+
+    public boolean isCurrentTabRaw() {
+        return panel.isCurrentTabRaw();
     }
 }
