@@ -1,5 +1,6 @@
 package org.llschall.jdmxlight.demo.model;
 
+import org.llschall.jdmxlight.DefaultUsbSelector;
 import org.llschall.jdmxlight.JDmxLight;
 import org.llschall.jdmxlight.JDmxLightStarter;
 import org.llschall.jdmxlight.demo.DemoException;
@@ -28,9 +29,9 @@ public class DemoModel {
 
     public DemoModel() {
         for (int i = 1; i <= 32; i++) {
-            rawMap.put(i, 100);
-
+            rawMap.put(i, 0);
         }
+
         map.put(COLOR, 0);
         map.put(ROTATION, 25);
         map.put(INCLINATION, 50);
@@ -82,7 +83,7 @@ public class DemoModel {
 
         this.isRaw = isRaw;
 
-        starter.start();
+        starter.start(new DefaultUsbSelector());
         started = true;
         update();
     }
@@ -94,7 +95,7 @@ public class DemoModel {
         }
 
         if (isRaw) {
-            rawMap.forEach(starter::update);
+            rawMap.forEach(this::sendDmx);
             return;
         }
 
@@ -106,6 +107,12 @@ public class DemoModel {
         starter.update(8, 30); // gradateur electronique
         starter.update(9, map.get(GOBOS));
         starter.update(14, map.get(NETTETE));
+    }
+
+    void sendDmx(int channel, int value) {
+        if (isRaw) {
+            starter.update(channel, value);
+        }
     }
 
 }
