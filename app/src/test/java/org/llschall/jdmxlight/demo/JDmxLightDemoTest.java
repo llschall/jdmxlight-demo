@@ -11,8 +11,8 @@ public class JDmxLightDemoTest {
 
     @Test
     public void testSetup() {
-        assertEquals("0.0.2", JDmxLight.VERSION);
-        assertEquals(1002, JDmxLight.VERSION_INT);
+        assertEquals("0.0.3", JDmxLight.VERSION);
+        assertEquals(1001, JDmxLight.VERSION_INT);
     }
 
 
