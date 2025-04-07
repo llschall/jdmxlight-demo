@@ -54,6 +54,7 @@ public class DemoModel {
 
     public void fireDmxValueChanged(int channel, int value) {
         rawMap.put(channel, value);
+        update();
     }
 
     public void fireDmxValueChanged(String name, int value) {
