@@ -24,18 +24,18 @@ public class RawPanel extends JPanel {
 
         int value;
 
-        Slider(DemoModel model, int i) {
+        Slider(DemoModel model, int channel) {
 
-            JLabel channel = new JLabel(buildLabel(i));
-            channel.setFont(channel.getFont().deriveFont(Font.ITALIC));
-            channel.setOpaque(true);
-            channel.setBackground(Color.LIGHT_GRAY);
+            JLabel channelLbl = new JLabel(buildLabel(channel));
+            channelLbl.setFont(channelLbl.getFont().deriveFont(Font.ITALIC));
+            channelLbl.setOpaque(true);
+            channelLbl.setBackground(Color.LIGHT_GRAY);
 
             JLabel value = new JLabel("" + this.value);
             value.setFont(value.getFont().deriveFont(17f));
 
             setLayout(new FlowLayout(FlowLayout.LEFT));
-            add(channel);
+            add(channelLbl);
             add(value);
 
             addMouseWheelListener(e -> {
@@ -44,7 +44,7 @@ public class RawPanel extends JPanel {
                 if (this.value < 0) this.value = 0;
                 if (this.value > 255) this.value = 255;
                 value.setText("" + this.value);
-                model.fireDmxValueChanged(i, this.value);
+                model.fireDmxValueChanged(channel, this.value);
             });
 
             Border border = BorderFactory.createLineBorder(Color.GRAY);
@@ -65,17 +65,39 @@ public class RawPanel extends JPanel {
 
                 @Override
                 public void mouseClicked(MouseEvent e) {
-                    String str = JOptionPane.showInternalInputDialog(RawPanel.this, "");
-                    try {
-                        int i1 = Integer.parseInt(str);
-                        if (i1 >= 0 && i1 < 255) {
-                            Slider.this.value = i1;
-                            value.setText("" + Slider.this.value);
-                            model.fireDmxValueChanged(i, Slider.this.value);
-                        }
-                    } catch (NumberFormatException ex) {
-                        ex.printStackTrace();
+
+                    int button = e.getButton();
+                    switch (button) {
+                        case MouseEvent.BUTTON1:
+                            // left button
+                            if (e.isControlDown()) {
+                                adjust(-32);
+                            } else {
+                                adjust(+32);
+                            }
+                            return;
+                        case MouseEvent.BUTTON2:
+                            // middle button
+                            return;
+                        case MouseEvent.BUTTON3:
+                            // right button
+                            update(0);
+                            return;
                     }
+                }
+
+                void adjust(int delta) {
+                    int v = Slider.this.value;
+                    v += delta;
+                    if (v < 0) v = 0;
+                    if (v > 255) v = 255;
+                    update(v);
+                }
+
+                void update(int j) {
+                    Slider.this.value = j;
+                    value.setText("" + Slider.this.value);
+                    model.fireDmxValueChanged(channel, Slider.this.value);
                 }
 
                 @Override
